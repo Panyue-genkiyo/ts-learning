@@ -19,3 +19,4 @@ const g: undefined = undefined; //同上
 const h: symbol = Symbol(); //es2015(es6)标准库中才存在Symbol
 
 
+

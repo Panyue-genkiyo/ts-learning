@@ -91,4 +91,15 @@ let k = 1 | 2 | 3 | 4 | 5 | 6;
 type myType = string;
 type OP = 1 | 2 | 3 | 4 | 5 | 6; //提炼出type
 
+
+type Callback = (data: string) => void;
+const fn:Callback = (data: string) => {
+   // return 1;
+}
+fn("hello");
+
+type test = [number, number];
+
+type test2 = string | { text: string };
+
 // let sssss: OP  = 9

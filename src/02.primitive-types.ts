@@ -2,6 +2,8 @@
  * 原始
  */
 
+export {}
+
 const a: string = "hello";
 const b: number = 1; //number包含NaN和infinity
 

@@ -191,7 +191,7 @@ dog.bark();
     const p1 = new Person('test', 18)
     // p1.name = 'test'; //可以改
     console.log(p1.getName())
-    p1.age = -1; //原型错误
+    // p1.age = -1; //年龄错误
     console.log(p1.age);
 
 
@@ -261,3 +261,26 @@ class MyClass<T>{
 }
 
 const mc = new MyClass<string>('hello');
+
+
+//交叉类型
+(function (){
+    //"既有T的能力，也有U的能力"
+    function test<T extends object, U extends object>(a: T, b: U): T & U{
+        const res = <T & U>{}; //类型断言
+        for(let key in a){
+            (<T>res)[key] = a[key];
+        }
+        for(let key in b){
+            if(!res.hasOwnProperty(key)){
+                (<U>res)[key] = b[key];
+            }
+        }
+
+        return res;
+    }
+
+     const obj = test({a: 1}, {b: 1});
+     console.log(obj); //{a: 1, b:1} Object.assign(a,b);
+})()
+

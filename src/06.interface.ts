@@ -285,3 +285,67 @@ let u: User = {
     age: 12,
     sex: 'male'
 }
+
+//type与interface
+
+interface common{
+    name: string,
+    age: number,
+}
+
+interface person<T> extends common{
+    sex: T
+}
+
+let lucy:person<number> = {
+    name: 'py',
+    age: 2,
+    sex: 0
+}
+
+//type使用交叉类型完成同样的工作
+type c = {
+    name: string,
+    age: number
+}
+type p<T> = {
+    sex: T
+} & c; //既是c也是t,类似与接口的继承
+
+let lily:p<number> = {
+    name: 'lily',
+    age: 12,
+    sex: 1
+}
+
+//type可以使用交叉类型,联合类型,元组
+type p1 = p<number> | p<string>
+type p2 = [p<number>, p<string>];
+
+const p_test: p2 = [{ name: 's1', age: 2, sex:1 },{ name: 's2', age: 3, sex:"male" } ]
+
+//type可以结合typeof使用
+class Config{
+   static hello = () => console.log('hello');
+   setPerson(age: number, sex: string){
+       ///...
+   }
+}
+
+type c1 = typeof Config;
+
+let C:c1 = class {
+   //结构要一样
+    setPerson(){
+
+    }
+    static hello(){
+
+    }
+}
+
+/**
+ * 总结:typescript中类型别名type和接口interface在使用上的一些区别，
+ * 在类class的类型定义中我们使用接口interface来做，
+ * 在定义简单类型、联合类型、交叉类型、元组时我们用类型别名type来做，并且它和typeof能够天然的结合在一起使用。
+ */

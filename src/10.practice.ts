@@ -241,3 +241,70 @@ type DeepFlat<T extends any[]> = {
 type DeepTestResult = DeepFlat<Deep>
 
 let dt:DeepTestResult = 'a' /// 'a' | 'b' | 'c' | 'd' | 'e'
+
+
+//七
+type PropertyKey = string | number | symbol
+type EmptyObject = {
+    [K in PropertyKey]: never
+}
+
+// 测试用例
+const shouldPass: EmptyObject = {}; // 可以正常赋值
+// const shouldFail: EmptyObject = { // 将出现编译错误
+//     prop: "TS"
+// }
+type SomeType =  {
+    prop: string
+}
+
+//从t2剔除t1
+type Exclusive<T1,  T2 extends T1> = {
+    //除了父接口T1的键存在，其余的键全部剔除
+    [K in keyof T2]: K extends keyof T1 ? T2[K]: never
+}
+// 更改以下函数的类型定义，让它的参数只允许严格SomeType类型的值
+function takeSomeTypeOnly<T extends SomeType>(x: Exclusive<SomeType, T>) {
+    return x;
+}
+
+// 测试用例：
+const x = { prop: 'a' };
+takeSomeTypeOnly(x) // 可以正常调用
+
+const y = {
+    prop: 'a',
+    additionalProp: 'b'
+}
+
+// takeSomeTypeOnly(y); //编译错误
+
+
+//8.
+// 定义 NonEmptyArray 工具类型，用于确保数据非空数组。
+
+// type NonEmptyArray<T> = [T, ...T[]]// 你的实现代码
+// type NonEmptyArray<T> = T[] & { 0: T };
+
+type NonEmptyArray<T> = {
+   [P in number]: T
+} & {
+    0: T
+}
+
+// const a1: NonEmptyArray<string> = [] // 将出现编译错误
+const b1: NonEmptyArray<string> = ['Hello TS'] // 非空数据，正常使用
+// 提示：该题目有多种解法，感兴趣小伙伴可以自行尝试一下。
+// 请在下面评论你的答案。
+
+
+//9
+type JoinStrArray<Arr extends string[], Separator extends string, Result extends string = ""> = {
+
+}// 你的实现代码
+
+// 测试用例
+type Names = ["Sem", "Lolo", "Kaquko"]
+type NamesComma = JoinStrArray<Names, ","> // "Sem,Lolo,Kaquko"
+type NamesSpace = JoinStrArray<Names, " "> // "Sem Lolo Kaquko"
+type NamesStars = JoinStrArray<Names, "⭐️"> // "Sem⭐️Lolo⭐️Kaquko"

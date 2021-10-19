@@ -323,3 +323,40 @@ productService.getProducts(1);
 
 
 //属性是独有的,但是方法是在类的原型上,说白了就是原型链的语法糖
+
+//在类中使用泛型
+
+class Collection<T>{
+    data: T[] = []; 
+
+    //收集
+    constructor(...data: T[]){
+        this.data.push(...data); //展开 
+    }
+
+    public shift(): T | undefined {
+        return this.data.length !== 0 ? this.data.shift() : undefined;
+    }
+
+}
+
+const numberCollection = new Collection<number>(1,3,5,6);
+const num = numberCollection.shift();
+console.log(num);
+
+const stringCollection = new Collection<string>('he', 'hello', 'what');
+const str = stringCollection.shift();
+console.log(str);
+
+type User = {
+    name: string,
+    age: number
+}
+
+const userCollection = new Collection<User>({
+    name:'panyue',
+    age: 18
+});
+
+const user = userCollection.shift();
+console.log((user as User).age);

@@ -367,8 +367,13 @@ console.log((user as User).age);
     class Person{
         protected name: string = '';
         public age: number = undefined || 0 ;
-        protected info(): string{
-            return `name: ${this.name},age:${this.age}`;        
+        private site: string = 'www.google.com.tw'; //私有属性只有自己能用
+        private info(): string{
+            return `name: ${this.name},age:${this.age}, from ${this.site}`;        
+        }
+
+        protected getInfo(): string{
+            return this.info();
         }
     }
 
@@ -379,8 +384,19 @@ console.log((user as User).age);
             this.age = age;
         }
         public show():void{
-            console.log(this.info());
+            console.log(this.getInfo());
         }
+        //#region 
+        //子类不能覆盖private
+        // private info(): string{
+        //     return `name: ${this.name},age:${this.age}, from ${this.site}`;        
+        // }
+        //#endregion
+        //可以覆盖protected但是权限一定要比父类同名方法权限相同或者更宽泛
+        // protected info(): string{
+        //     console.log('子类');
+        //     return `name: ${this.name},age:${this.age}, from ${this.site}`;        
+        // }
     }
      const user = new User('hello', 18);
      user.show();
@@ -406,3 +422,4 @@ console.log((user as User).age);
    const obj = new User<UserInterface>({name: 'payue', age: 21});
    console.log(obj.get().name); //panyue
 }
+

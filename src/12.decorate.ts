@@ -193,3 +193,70 @@ class UE{
 }
 
 new UE().show();
+
+//鉴权案例
+interface U{
+    name: string, 
+    isLoading: boolean,
+    permission: string[],
+}
+
+let user: U = {
+    name: 'panyue',
+    isLoading: true,
+    permission: ['store', 'mange']
+}
+
+//鉴权装饰器
+const PermissionDecorator = (permission:string[]): MethodDecorator => {
+    return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
+        let md = descriptor.value;
+        descriptor.value = () => {
+            const validate = (): boolean => {
+               return  permission.every(k => user.permission.includes(k));
+            }
+            if(!user.isLoading || !validate()){
+               console.log('你没有登陆或者权限不够');
+            }else{
+                md();
+            }
+        }
+    }
+}
+class Artical{
+    
+    show(){
+        console.log('展示文章列表');
+    }
+    @PermissionDecorator(['store', 'mange'])
+    store(){
+        console.log('保存文章');
+    }
+}
+
+new Artical().store();
+
+//通过装饰器模拟异步请求
+
+const RequestDecorator = (url: string): MethodDecorator => {
+    return (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
+       const md = descriptor.value; 
+       new Promise<any[]>(resolve =>  { 
+           setTimeout(() => {
+               resolve([{ name: 'py1' }, {name: 'py2'}]);
+           }, 2000)   
+        })
+        .then(users => {
+            md(users);
+        });
+    }
+}
+
+class Usr{
+    @RequestDecorator('www.baidu.com')
+    public all(users?: any[]){
+        console.log(users);
+    }
+}
+
+new Usr().all();

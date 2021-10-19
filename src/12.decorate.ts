@@ -52,6 +52,7 @@ class LoginController{
 new LoginController().login();
 
 //复用装饰器,继承的另一条出路
+
 @MessageDecorator
 class ArticleController{
     public store(){
@@ -60,3 +61,40 @@ class ArticleController{
 }
 
 new ArticleController().store();
+
+//装饰器工厂
+
+const MusicDecoratorFactory = (type: string): ClassDecorator => {
+    switch(type.toLowerCase()){
+        case 'tank':
+            return (target: Function) => {
+              target.prototype.playMusic = (): void  => {
+              console.log('播放ttt');
+           }
+        }
+        case 'player':
+            return (target: Function) => {
+                target.prototype.playMusic = (): void  => {
+                console.log('播放www');
+            }    
+         }
+        default: 
+          return (target: Function) => {
+            target.prototype.playMusic = (): void  => {
+            console.log('无');
+          }    
+       }
+   }
+}
+
+@MusicDecoratorFactory('tank')
+class Tank1{
+        
+}
+let t1 = new Tank1();
+(<any>t1).playMusic();
+
+
+
+
+

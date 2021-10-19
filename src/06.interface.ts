@@ -349,3 +349,27 @@ let C:c1 = class {
  * 在类class的类型定义中我们使用接口interface来做，
  * 在定义简单类型、联合类型、交叉类型、元组时我们用类型别名type来做，并且它和typeof能够天然的结合在一起使用。
  */
+
+{
+    //接口中使用泛型和泛型的多类型定义
+    interface ArticleInterFace<B, C>{
+        title: string
+        isLock: B
+        comment?: C[]
+    }
+
+    type CommentType = {
+        content: string,
+        author: string
+    }
+   
+    const at: ArticleInterFace<boolean, CommentType> = {
+        title: 'hello.com',
+        isLock: true,
+        comment: [{
+            content: 'comment....',
+            author: 'hello'
+        }]
+    } 
+
+}

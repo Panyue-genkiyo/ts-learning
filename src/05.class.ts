@@ -360,3 +360,28 @@ const userCollection = new Collection<User>({
 
 const user = userCollection.shift();
 console.log((user as User).age);
+
+//受保护的
+{
+    //继承关系
+    class Person{
+        protected name: string = '';
+        public age: number = undefined || 0 ;
+        protected info(): string{
+            return `name: ${this.name},age:${this.age}`;        
+        }
+    }
+
+    class User extends Person {
+        constructor(name: string, age: number) {
+            super();
+            this.name = name;
+            this.age = age;
+        }
+        public show():void{
+            console.log(this.info());
+        }
+    }
+     const user = new User('hello', 18);
+     user.show();
+}

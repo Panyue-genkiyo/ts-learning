@@ -112,16 +112,25 @@ const showDecorator:MethodDecorator = (target: Object, propertyKey: string | sym
     //     console.log('hello');
     // }
     //#endregion
-
-    descriptor.value = () => { 
-        console.log('py')
-    }
+    console.log(descriptor); //打印方法的描述
+    // descriptor.value = () => { 
+    //     console.log('py')
+    // }
+    descriptor.writable = false;
 }
 class User{
     @showDecorator
-    public show(){
+    public static show(){
        console.log('logo');
     }
+     //静态方法的装饰器
+      
 }
 
-new User().show();
+User.show();
+
+//因为这里writeable:false所以无法改动该函数
+// User.show = (): void => { 
+//    console.log('show method!!');
+// }
+// User.show();

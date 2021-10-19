@@ -313,4 +313,13 @@ function loggingIdentity<T extends Lengthwise>(arg: T): T {
 loggingIdentity({
     length: 1,
     name: 'panyue'
-})
+});
+
+//泛型的约束
+function returnArg<T>(arg: T[]): number {
+    return arg.length;
+}
+// returnArg([{ length: 1 }, {length: 2}]);
+console.log(returnArg<string | number>([2,4,5,'dede']));
+
+

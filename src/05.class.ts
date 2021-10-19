@@ -385,3 +385,24 @@ console.log((user as User).age);
      const user = new User('hello', 18);
      user.show();
 }
+
+//构造函数中使用泛型
+{
+   class User<T>{
+
+       constructor(private _user:T){
+       }
+
+       public get(): T{
+           return this._user;
+       }
+   }
+
+   interface UserInterface{
+       name: string;
+       age: number
+   }
+    
+   const obj = new User<UserInterface>({name: 'payue', age: 21});
+   console.log(obj.get().name); //panyue
+}

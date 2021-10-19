@@ -134,3 +134,62 @@ User.show();
 //    console.log('show method!!');
 // }
 // User.show();
+
+//模拟代码高亮加深对函数装饰器的理解
+const highDecorator :MethodDecorator = (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
+    const method = descriptor.value;
+    descriptor.value = () => { 
+        return `<div style='color:red;'>${method()}</div>`
+    }
+}
+class UT{
+    @highDecorator
+    public static response(){
+       return 'py';
+    }
+     //静态方法的装饰器
+}
+
+console.log(UT.response());
+
+//延迟执行
+const SleepDecorator  = (time: number): MethodDecorator => {
+    return (...args: any[]) => {
+        const [,,descriptor] = args; //解构赋值
+        const method = descriptor.value;
+        descriptor.value = () => {
+            setTimeout(() => {
+                method();
+            }, time);
+        }
+    }
+} 
+class defUT{
+    @SleepDecorator(1000)
+    public static response(){
+        console.log('hello');
+    }
+}
+
+defUT.response();
+
+//使用装饰器来进行全局的异常管理
+const ErrorDecorate: MethodDecorator = (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
+    const method = descriptor.value;
+    descriptor.value = () => {
+        try{
+          method();
+        }catch(e:any){
+          console.log(`%c${e.message}`, "color: green;font-size: 20px");  
+        }
+    }
+}
+
+class UE{
+    @ErrorDecorate
+    show(){
+      throw new Error('something wrong has been happend');   
+    }
+}
+
+new UE().show();

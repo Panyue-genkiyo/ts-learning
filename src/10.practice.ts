@@ -308,3 +308,6 @@ type Names = ["Sem", "Lolo", "Kaquko"]
 type NamesComma = JoinStrArray<Names, ","> // "Sem,Lolo,Kaquko"
 type NamesSpace = JoinStrArray<Names, " "> // "Sem Lolo Kaquko"
 type NamesStars = JoinStrArray<Names, "⭐️"> // "Sem⭐️Lolo⭐️Kaquko"
+
+
+type a = 1 | 'hello' | 'string'; //测试在vscode上交代码

@@ -20,6 +20,7 @@ class Tank{
 }
 
 const t = new Tank();
+// moveDecorate(Tank); //结果完全一样
 console.log((t as any).getPosition());//在对象原型上的方法
 
 @moveDecorate
@@ -31,4 +32,6 @@ class Player{
 const player = new Player();
 console.log(( <any>player ).getPosition());
 console.log(( <any>player ).name);
+
+
 

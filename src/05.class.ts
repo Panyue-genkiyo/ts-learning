@@ -320,3 +320,6 @@ class ProductService {
 const productService = new ProductService();
 productService.getProducts();
 productService.getProducts(1);
+
+
+//属性是独有的,但是方法是在类的原型上,说白了就是原型链的语法糖

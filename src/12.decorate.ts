@@ -1,4 +1,7 @@
+import { createModuleResolutionCache, MethodDeclaration } from "typescript";
+
 //装饰器
+export {};
 
 //类装饰器(原型)
 const moveDecorate: ClassDecorator = (target: Function) => {
@@ -97,4 +100,28 @@ let t1 = new Tank1();
 
 
 
+//typescript方法装饰器
 
+const showDecorator:MethodDecorator = (target: Object, propertyKey: string | symbol, descriptor: TypedPropertyDescriptor<T>) => {
+    //#region 
+    // console.log(args);
+    // // const md = args[2].value; //代表函数
+    // // md();
+    // //改掉该show函数
+    // args[2].value = () => {
+    //     console.log('hello');
+    // }
+    //#endregion
+
+    descriptor.value = () => { 
+        console.log('py')
+    }
+}
+class User{
+    @showDecorator
+    public show(){
+       console.log('logo');
+    }
+}
+
+new User().show();
